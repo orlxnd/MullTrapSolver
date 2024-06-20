@@ -1,0 +1,26 @@
+#Instalar un entorno virtual en el proyecto ---> pip install virtualenv
+
+#Para crear la carpeta del entorno virtual ---> virtualenv venv 
+
+#Para activar el entorno virtual ---> .\venv\Scripts\activate
+
+#Instalar django ---> pip install django
+
+#Verificar instalación de django ---> django-admin --version
+
+#Crear proyecto django ---> django-admin startproject [nombre del proyecto]
+
+#Crear proyecto dentro de otra carpeta ---> django-admin startproject [nombre del proyecto] .
+
+#Ejecutar o correr el servidor en django ---> python manage.py runserver
+
+#Ejecutar el servidor en django en un puerto especifico --->python manage.py runserver [Puerto a ejecutar]
+
+#Crear una app o aplicacion dentro de un proyecto en django ---> python manage.py startapp [nombre de la app] 
+
+
+
+Base de datos
+#Instalar el instalar el paquete mysqlclient. --->pip install mysqlclient
+#Hacer la migraciones de los mudulos ---> python manage.py makemigrations
+#Hacer las migraciones de los datos --->  python manage.py migrate

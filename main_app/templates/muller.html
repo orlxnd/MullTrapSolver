@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Método de Muller{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Método de Muller</h2>
+    <form method="post" class="bg-light p-5 mb-7 pb-7 rounded shadow-sm">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="funcion" class="form-label fw-bold">Función:</label>
+            <input type="text" class="form-control" id="funcion" name="funcion" placeholder="Ingrese la función f(x) (use '**' para potencias)" required>
+            <small class="form-text text-muted">Ejemplo: x**3 + x**2 - 3*x - 5</small>
+        </div>
+        <div class="mb-3">
+            <label for="x0" class="form-label fw-bold">x0:</label>
+            <input type="number" step="any" class="form-control" id="x0" name="x0" placeholder="Valor inicial x0" required>
+        </div>
+        <div class="mb-3">
+            <label for="x1" class="form-label fw-bold">x1:</label>
+            <input type="number" step="any" class="form-control" id="x1" name="x1" placeholder="Valor inicial x1" required>
+        </div>
+        <div class="mb-3">
+            <label for="x2" class="form-label fw-bold">x2:</label>
+            <input type="number" step="any" class="form-control" id="x2" name="x2" placeholder="Valor inicial x2" required>
+        </div>
+        <div class="mb-3">
+            <label for="tol" class="form-label fw-bold">Error relativo(%):</label>
+            <input type="number" step="any" class="form-control" id="tol" name="tol" placeholder="Error relativo en porcentaje" required>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Calcular</button>
+    </form>
+    
+    {% if error %}
+    <div class="alert alert-danger mt-3">{{ error }}</div>
+    {% endif %}
+    
+    {% if resultado is not None %}
+    <div class="mt-5 p-4 bg-white rounded shadow-sm">
+        <h3 class="mb-3">Resultado:</h3>
+        <p class="fs-5">La raíz aproximada es: <strong>{{ resultado }}</strong></p>
+        
+        {% if user.is_authenticated %}
+        <h4 class="mt-4">Pasos:</h4>
+        <ul class="list-group">
+            {% for paso in pasos %}
+            <li class="list-group-item">{{ paso|safe }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        
+        {% if plot_path %}
+        {% if user.is_authenticated %}
+        <div class="mt-4 text-center">
+            <h4>Gráfico del Método de Muller</h4>
+            <img src="{% static 'muller_plot.png' %}" alt="Gráfica del método de Muller" class="img-fluid rounded shadow-sm mx-auto d-block" style="max-width: 90%; max-height: 600px;">
+        </div>
+        {% endif %}
+        {% endif %}
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

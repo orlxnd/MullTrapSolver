@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}Método de Trapecios{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="display-4 text-center">Método de Trapecios</h1>
+    <p class="lead text-center mb-5">Calcula la integral de una función utilizando el método de los trapecios.</p>
+    
+    <div class="card shadow-sm p-4 mb-5 bg-white rounded">
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="funcion" class="form-label"><strong>Función:</strong></label>
+                <input type="text" class="form-control" id="funcion" name="funcion" placeholder="Escribe la función, por ejemplo: exp(x**2)" required>
+            </div>
+            <div class="form-group">
+                <label for="a" class="form-label"><strong>Límite inferior (a):</strong></label>
+                <input type="number" step="any" class="form-control" id="a" name="a" required>
+            </div>
+            <div class="form-group">
+                <label for="b" class="form-label"><strong>Límite superior (b):</strong></label>
+                <input type="number" step="any" class="form-control" id="b" name="b" required>
+            </div>
+            <div class="form-group">
+                <label for="n" class="form-label"><strong>Número de trapecios (n):</strong></label>
+                <input type="number" class="form-control" id="n" name="n" required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block mt-4">Calcular</button>
+        </form>
+    </div>
+
+    {% if resultado is not None %}
+    <div class="card shadow-sm p-4 mb-5 bg-light rounded">
+        <h2 class="h4">Resultado</h2>
+        <p>La integral aproximada es: <strong>{{ resultado }}</strong></p>
+    </div>
+    {% endif %}
+    
+    {% if user.is_authenticated %}
+    <div class="card shadow-sm p-4 mb-5 bg-light rounded">
+        <h3 class="h4">Pasos</h3>
+        <ol class="pl-3">
+            {% for paso in pasos %}
+            <li class="mb-2">{{ paso|safe }}</li>
+            {% endfor %}
+        </ol>
+    </div>
+    
+    {% if plot_path %}
+    <div class="text-center mt-5">
+        <h2 class="h4">Gráfico del Método de los Trapecios</h2>
+        <img src="../static/trapecio_plot.png" alt="Gráfico del Método de los Trapecios" class="img-fluid rounded shadow-sm">
+    </div>
+    {% endif %}
+    {% endif %}
+</div>
+
+{% endblock %}
+

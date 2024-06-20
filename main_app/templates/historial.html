@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Historial
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2 class="mt-4 text-center">Historial</h2>
+    
+    <div class="table-responsive mt-4 mb-5">
+        <table class="table table-hover shadow-sm rounded mb-5 pb-5">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Fecha</th>
+                    <th>Método</th>
+                    <th>Función</th>
+                    <th>Parámetros</th>
+                    <th>Resultado</th>
+                    <th>Pasos</th>
+                    <th>Eliminar</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for registro in registros %}
+                <tr>
+                    <td>{{ registro.fecha_creacion }}</td>
+                    <td>{{ registro.metodo }}</td>
+                    <td>{{ registro.funcion }}</td>
+                    <td>{{ registro.parametros }}</td>
+                    <td>{{ registro.resultado }}</td>
+                    <td>
+                        <button class="btn btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ forloop.counter }}" aria-expanded="false" aria-controls="collapse{{ forloop.counter }}"><i class="fa-solid fa-eye"></i></button>
+                        <div class="collapse mt-2" id="collapse{{ forloop.counter }}">
+                            <div class="card card-body">
+                                <ul class="list-group list-group-flush">
+                                    {% for paso in registro.pasos %}
+                                    <li class="list-group-item">{{ paso }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <form action="{% url 'eliminar_historial' registro.pk %}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-outline-danger"><i class="fa-solid fa-trash"></i></button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<style>
+    .table-responsive {
+        margin-bottom: 500px; /* Margen inferior adicional */
+    }
+    .table {
+        background-color: #f9f9f9;
+        padding-bottom: 250px; /* Padding inferior adicional */
+    }
+    .thead-dark th {
+        background-color: #343a40;
+        color: #fff;
+    }
+    .btn-outline-primary {
+        border-color: #007bff;
+        color: #007bff;
+    }
+    .btn-outline-primary:hover {
+        background-color: #007bff;
+        color: #fff;
+    }
+    .btn-outline-danger {
+        border-color: #dc3545;
+        color: #dc3545;
+    }
+    .btn-outline-danger:hover {
+        background-color: #dc3545;
+        color: #fff;
+    }
+</style>
+{% endblock %}

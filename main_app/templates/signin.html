@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-5 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form action="" method="POST" class="card p-5 rounded" style="margin: 60px 30px; padding: 40px;">
+                <h1 class="text-center mb-4">Ingresar</h1>
+                
+                {% if error %}
+                <div class="alert alert-danger">
+                    {{ error }}
+                </div>
+                {% endif %}
+                
+                {% csrf_token %}
+                
+                <div class="mb-4">
+                    <label for="username" class="form-label"><strong>Usuario:</strong></label>
+                    <input type="text" name="username" id="username" class="form-control" placeholder="Usuario" required>
+                </div>
+                
+                <div class="mb-4">
+                    <label for="password" class="form-label"><strong>Contraseña:</strong></label>
+                    <div class="input-group">
+                        <input type="password" name="password" id="password" class="form-control" placeholder="Contraseña" required>
+                        <button type="button" class="btn btn-outline-secondary" id="togglePassword">
+                            <i class="bi bi-eye"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="d-grid gap-3">
+                    <button type="submit" class="btn btn-primary">Ingresar</button>
+                </div>
+                
+                <div class="text-center mt-4">
+                    <a href="{% url 'password_reset' %}" class="link-primary">¿Olvidaste tu contraseña?</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
